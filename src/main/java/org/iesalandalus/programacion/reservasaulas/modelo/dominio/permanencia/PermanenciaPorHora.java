@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 public class PermanenciaPorHora extends Permanencia implements Serializable {
 
@@ -45,14 +46,14 @@ public class PermanenciaPorHora extends Permanencia implements Serializable {
 	}
 
 	private void setHora(LocalTime hora) {
-		
+
 		if (hora == null)
 			throw new NullPointerException("La hora de una permanencia no puede ser nula.");
-		
+
 		if (hora.getHour() < HORA_INICIO || hora.getHour() > HORA_FIN)
 			throw new IllegalArgumentException(
 					"La hora de una permanencia debe estar comprendida entre las 8 y las 22.");
-		
+
 		if (hora.getMinute() != 0)
 			throw new IllegalArgumentException("La hora de una permanencia debe ser una hora en punto.");
 
@@ -60,22 +61,22 @@ public class PermanenciaPorHora extends Permanencia implements Serializable {
 	}
 
 	private void setHora(String hora) {
-		
+
 		LocalTime parseHora = null;
-		
+
 		if (hora == null)
 			throw new NullPointerException("La hora de una permanencia no puede ser nula.");
-		
+
 		try {
 			parseHora = LocalTime.parse(hora, FORMATO_HORA);
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("El formato de la hora de la permanencia no es correcto.");
 		}
-		
+
 		if (parseHora.getHour() < HORA_INICIO || parseHora.getHour() > HORA_FIN)
 			throw new IllegalArgumentException(
 					"La hora de una permanencia debe estar comprendida entre las 8 y las 22.");
-		
+
 		if (parseHora.getMinute() != 0)
 			throw new IllegalArgumentException("La hora de una permanencia debe ser una hora en punto.");
 		this.hora = parseHora;
@@ -87,11 +88,13 @@ public class PermanenciaPorHora extends Permanencia implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "[dia=" + dia.format(FORMATO_DIA) + ", hora=" + hora.format(FORMATO_HORA) + "]";
+	}
+
+	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((hora == null) ? 0 : hora.hashCode());
-		return result;
+		return Objects.hash(hora);
 	}
 
 	@Override
@@ -103,17 +106,7 @@ public class PermanenciaPorHora extends Permanencia implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PermanenciaPorHora other = (PermanenciaPorHora) obj;
-		if (hora == null) {
-			if (other.hora != null)
-				return false;
-		} else if (!hora.equals(other.hora))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "[dia=" + dia.format(FORMATO_DIA) + ", hora=" + hora.format(FORMATO_HORA) + "]";
+		return Objects.equals(hora, other.hora);
 	}
 
 }

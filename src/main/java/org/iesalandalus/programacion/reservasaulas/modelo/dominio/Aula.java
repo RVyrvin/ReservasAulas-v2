@@ -4,7 +4,7 @@ public class Aula {
 
 	private static final float PUNTOS_POR_PUESTO = 0.5f;
 	private static final int MIN_PUESTOS = 10;
-	private static final int MAX_PUESTOS = 30;
+	private static final int MAX_PUESTOS = 100;
 	private String nombre;
 	private int puestos;
 

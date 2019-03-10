@@ -2,9 +2,9 @@ package org.iesalandalus.programacion.reservasaulas.modelo.dominio.permanencia;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 public abstract class Permanencia implements Serializable {
 
@@ -37,10 +37,10 @@ public abstract class Permanencia implements Serializable {
 		this.dia = dia;
 	}
 
-	public void setDia(String dia) {		
+	public void setDia(String dia) {
 		if (dia == null)
 			throw new NullPointerException("El día de una permanencia no puede ser nulo.");
-		
+
 		try {
 			this.dia = LocalDate.parse(dia, FORMATO_DIA);
 		} catch (DateTimeParseException e) {
@@ -52,8 +52,21 @@ public abstract class Permanencia implements Serializable {
 
 	public abstract String toString();
 
-	public abstract int hashCode();
+	@Override
+	public int hashCode() {
+		return Objects.hash(dia);
+	}
 
-	public abstract boolean equals(Object object);
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Permanencia other = (Permanencia) obj;
+		return Objects.equals(dia, other.dia);
+	}
 
 }
