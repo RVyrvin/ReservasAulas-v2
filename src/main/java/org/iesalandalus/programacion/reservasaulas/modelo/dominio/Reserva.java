@@ -26,7 +26,6 @@ public class Reserva {
 			this.setAula(reserva.aula);
 			this.setPermanencia(reserva.permanencia);
 		}
-
 	}
 
 	public Profesor getProfesor() {
@@ -69,59 +68,13 @@ public class Reserva {
 
 	public float getPuntos() {
 		return aula.getPuntos() + permanencia.getPuntos();
-	}	
-
+	}
 
 	@Override
 	public String toString() {
 		return "[profesor=" + profesor + ", aula=" + aula + ", permanencia=" + permanencia + ", puntos=" + getPuntos()
 				+ "]";
 	}
-/*
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((aula == null) ? 0 : aula.hashCode());
-		result = prime * result + ((permanencia == null) ? 0 : permanencia.hashCode());
-		result = prime * result + ((profesor == null) ? 0 : profesor.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Reserva))
-			return false;
-		Reserva other = (Reserva) obj;
-		if (aula == null) {
-			if (other.aula != null)
-				return false;
-		} else if (!aula.equals(other.aula))
-			return false;
-		if (permanencia == null) {
-			if (other.permanencia != null)
-				return false;
-		} else {
-			if (permanencia instanceof PermanenciaPorHora) {
-				if (!((PermanenciaPorHora) permanencia).equals((PermanenciaPorHora) other.permanencia))
-					return false;
-			} else if (permanencia instanceof PermanenciaPorTramo) {
-				if (!((PermanenciaPorTramo) permanencia).equals((PermanenciaPorTramo) other.permanencia))
-					return false;
-			}
-		}
-		if (profesor == null) {
-			if (other.profesor != null)
-				return false;
-		} else if (!profesor.equals(other.profesor))
-			return false;
-		return true;
-	}
-*/
 
 	@Override
 	public int hashCode() {
@@ -137,9 +90,7 @@ public class Reserva {
 		if (getClass() != obj.getClass())
 			return false;
 		Reserva other = (Reserva) obj;
-		return Objects.equals(aula, other.aula) && Objects.equals(permanencia, other.permanencia)
-				&& Objects.equals(profesor, other.profesor);
+		return Objects.equals(aula, other.aula) && Objects.equals(permanencia, other.permanencia);
+		// && Objects.equals(profesor, other.profesor);
 	}
-	
-	
 }

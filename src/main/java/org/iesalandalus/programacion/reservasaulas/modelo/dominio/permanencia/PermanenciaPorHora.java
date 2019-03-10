@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Objects;
 
 public class PermanenciaPorHora extends Permanencia implements Serializable {
 
@@ -94,19 +93,26 @@ public class PermanenciaPorHora extends Permanencia implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hora);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((hora == null) ? 0 : hora.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof PermanenciaPorHora))
 			return false;
 		PermanenciaPorHora other = (PermanenciaPorHora) obj;
-		return Objects.equals(hora, other.hora);
+		if (hora == null) {
+			if (other.hora != null)
+				return false;
+		} else if (!hora.equals(other.hora))
+			return false;
+		return true;
 	}
-
 }

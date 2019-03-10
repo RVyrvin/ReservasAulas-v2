@@ -61,42 +61,28 @@ public class Reservas {
 
 		if (reserva.getPuntos() + getPuntosGastadosReserva(reserva) > MAX_PUNTOS_PROFESORES_MES)
 			throw new OperationNotSupportedException(
-					"Esta reserva excede los puntos máximos por mes para dicho profesor.");		
-		
+					"Esta reserva excede los puntos máximos por mes para dicho profesor.");
+
 		if (coleccionReservas.contains(reserva))
 			throw new OperationNotSupportedException("La reserva ya existe.");
 
 		Reserva res = getReservaDia(reserva.getPermanencia().getDia());
-		
-		/*if (res != null) {
-			if (res.getPermanencia() instanceof PermanenciaPorTramo) {
-				PermanenciaPorTramo resPermanenciaPorTramo = new PermanenciaPorTramo(
-						(PermanenciaPorTramo) res.getPermanencia());
-				PermanenciaPorTramo reservaPermanenciaPorTramo = new PermanenciaPorTramo(
-						(PermanenciaPorTramo) reserva.getPermanencia());
-				if (resPermanenciaPorTramo.getTramo().equals(reservaPermanenciaPorTramo.getTramo())
-						&& res.getAula().equals(reserva.getAula()))
-					throw new OperationNotSupportedException(
-							"Ya se ha realizado una reserva por tramo para este día y aula.");
-			}
 
-			if (res.getPermanencia() instanceof PermanenciaPorHora) {
-				if (res.getPermanencia() instanceof PermanenciaPorHora) {
-					PermanenciaPorHora resPermanenciaPorHora = new PermanenciaPorHora(
-							(PermanenciaPorHora) res.getPermanencia());
-					PermanenciaPorHora reservaPermanenciaPorHora = new PermanenciaPorHora(
-							(PermanenciaPorHora) res.getPermanencia());
-					if (resPermanenciaPorHora.getHora().equals(reservaPermanenciaPorHora.getHora())
-							&& res.getAula().equals(reserva.getAula()))
-						throw new OperationNotSupportedException(
-								"Ya se ha realizado una reserva por hora para este día y aula.");
-				}
+		if (res != null) {
 
-			}
-		}*/		
-		
+			if (res.getPermanencia() instanceof PermanenciaPorTramo
+					&& reserva.getPermanencia() instanceof PermanenciaPorHora)
+				throw new OperationNotSupportedException(
+						"Ya se ha realizado una reserva por tramo para este día y aula.");
+
+			if (res.getPermanencia() instanceof PermanenciaPorHora
+					&& reserva.getPermanencia() instanceof PermanenciaPorTramo)
+				throw new OperationNotSupportedException(
+						"Ya se ha realizado una reserva por hora para este día y aula.");
+
+		}
+
 		coleccionReservas.add(new Reserva(reserva));
-
 	}
 
 	private boolean esMesSiguienteOPosterior(Reserva reserva) {

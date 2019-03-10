@@ -2,7 +2,6 @@ package org.iesalandalus.programacion.reservasaulas.modelo.dominio.permanencia;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class PermanenciaPorTramo extends Permanencia implements Serializable {
 
@@ -47,19 +46,24 @@ public class PermanenciaPorTramo extends Permanencia implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(tramo);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((tramo == null) ? 0 : tramo.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof PermanenciaPorTramo))
 			return false;
 		PermanenciaPorTramo other = (PermanenciaPorTramo) obj;
-		return tramo == other.tramo;
+		if (tramo != other.tramo)
+			return false;
+		return true;
 	}
 
 }
