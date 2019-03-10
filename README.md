@@ -1,6 +1,6 @@
 # Tarea Reservas de Aulas
 ## Profesor: José Ramón Jiménez Reyes
-## Alumno:
+## Alumno: Roman Vyrvin
 
 El cliente nos comenta que debemos tener en cuenta los siguientes aspectos:
 
