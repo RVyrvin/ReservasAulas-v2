@@ -1,14 +1,21 @@
 package org.iesalandalus.programacion.reservasaulas.modelo.dominio.permanencia;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-public abstract class Permanencia {
+public abstract class Permanencia implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	protected static final DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	protected LocalDate dia;
 
-	protected Permanencia() {
+	protected Permanencia(Permanencia permanencia) {
+		if (permanencia == null)
+			throw new NullPointerException("No se puede copiar una permanencia nula.");
+		setDia(permanencia.getDia());
 
 	}
 
@@ -30,10 +37,15 @@ public abstract class Permanencia {
 		this.dia = dia;
 	}
 
-	public void setDia(String dia) {
-		if (dia.trim().isEmpty())
-			throw new IllegalArgumentException("El día de una permanencia no puede ser vacio.");
-		this.dia = LocalDate.parse(dia, FORMATO_DIA);
+	public void setDia(String dia) {		
+		if (dia == null)
+			throw new NullPointerException("El día de una permanencia no puede ser nulo.");
+		
+		try {
+			this.dia = LocalDate.parse(dia, FORMATO_DIA);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("El formato del día de la permanencia no es correcto.");
+		}
 	}
 
 	public abstract int getPuntos();
@@ -42,6 +54,6 @@ public abstract class Permanencia {
 
 	public abstract int hashCode();
 
-	public abstract boolean equals(Object object);	
+	public abstract boolean equals(Object object);
 
 }
